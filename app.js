@@ -1,90 +1,90 @@
-// Array contains possible moves
-
-possibleMoves = ["Rock", "Paper", "Scissors"]
-
-// Variable That keeps count of which round we're in, this will increase until the game is over.
-
-let roundCounter = 0;
-
-// keep track of scores
-
-let playerScore = 0;
-let computerScore = 0;
-
-// Randomly decide move for computer
-
+// create an empty string for the player and computer choice to live in
+let playerChoice
 let computerChoice
 
+// store counters for scores and round number, set them to 0
+let roundCounter = 0
+let playerScore = 0
+let computerScore = 0
+
+let visualPlayerScore = document.querySelector('.playerScore')
+let visualComputerScore = document.querySelector('.computerScore');
+
+// find the buttons on the page and assign them a variable
+const choices = document.querySelectorAll(".choice");
+
+// when a button is clicked, store the class of the individual button inside playerChoice
+choices.forEach (choice => {
+    choice.addEventListener('click', () => {
+        playerChoice = (choice.className)
+        playRound()
+    }) 
+});
+
+// Array contains possible moves for computer
+possibleMoves = ["choice Rock", "choice Paper", "choice Scissors"]
+
+// Function that randomly decides move for computer
 function getComputerChoice() {
     let randomMove = Math.floor(Math.random() * possibleMoves.length);
     computerChoice =  possibleMoves[randomMove];
     return computerChoice;
 }
 
-// Prompt Player for rock, paper, or scissors
+let resultEl = document.querySelector('.results')
+
+function showResults(result) {
+    let p = document.createElement('p');
+    p.textContent = result
+    resultEl.appendChild(p);
+}
+
+function displayResults() {
+    if (playerScore > computerScore) {
+        showResults("Player wins!")
+    } else if (playerScore < computerScore) {
+        showResults("Computer wins!")
+    }
+}
+
+// Checks whether the game is over
+function endGameCheck() {
+    if (playerScore == 5 || computerScore == 5) {
+        displayResults();
+    }
+}
+
 
 function playRound() {
-    
-
-    // Check input for proper selection
-    // for (let i = 0; i < 5; i++) {
+        console.log(playerChoice);
         getComputerChoice()
         console.log(computerChoice)
 
-        let playerChoice = prompt("Please enter Rock, Paper, or Scissors!")
-    
-        // Take user input and capitalize first letter, to lowercase other letters
-        let playerChoiceFormatted = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1).toLowerCase();
-        console.log(playerChoiceFormatted)
-        
-        if (possibleMoves.indexOf(playerChoiceFormatted) !== -1) {
+            //logic that decides the game's winner
             if (
-                (computerChoice === "Rock" && playerChoiceFormatted === "Rock") ||
-                (computerChoice === "Paper" && playerChoiceFormatted === "Paper") ||
-                (computerChoice === "Scissors" && playerChoiceFormatted === "Scissors")
+                (computerChoice === "choice Rock" && playerChoice === "choice Rock") ||
+                (computerChoice === "choice Paper" && playerChoice === "choice Paper") ||
+                (computerChoice === "choice Scissors" && playerChoice === "choice Scissors")
             ) {
-                console.log("Draw!")
+                console.log("Draw!");
+
             } else if (
-                (computerChoice === "Rock" && playerChoiceFormatted === "Scissors") ||
-                (computerChoice === "Scissors" && playerChoiceFormatted === "Paper") ||
-                (computerChoice === "Paper" && playerChoiceFormatted === "Rock")
+                (computerChoice === "choice Rock" && playerChoice === "choice Scissors") ||
+                (computerChoice === "choice Scissors" && playerChoice === "choice Paper") ||
+                (computerChoice === "choice Paper" && playerChoice === "choice Rock")
             ) {
                 console.log("Computer wins round!")
                 computerScore++
+                visualComputerScore.innerHTML = ("Computer: " + computerScore)
             } else {
                 console.log("Player wins round!")
                 playerScore++
+                visualPlayerScore.innerHTML = ("Player: ") + playerScore
             }
             console.log("Player: " + playerScore)
             console.log("Computer: " + computerScore)
-        } else {
-            playRound()
-        }
-    }
-    if (playerScore > computerScore) {
-        console.log ("Player wins game!")
-    } else if (playerScore < computerScore) {
-        console.log ("Computer wins game!")
-    } else if (playerScore === computerScore) {
-        console.log ("The game is a draw!")
-    }
+
+            endGameCheck()
+        
     
-    
-    
-
-
-
-
-//}
-
-
-
-// if improper selection, reprompt user
-// if proper selection, compare to computer choice
-
-playRound();
-
-// display round result
-
-
-
+}
