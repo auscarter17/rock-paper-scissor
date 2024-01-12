@@ -27,7 +27,7 @@ function playRound() {
     
 
     // Check input for proper selection
-    for (let i = 0; i < 5; i++) {
+    // for (let i = 0; i < 5; i++) {
         getComputerChoice()
         console.log(computerChoice)
 
@@ -75,7 +75,7 @@ function playRound() {
 
 
 
-}
+//}
 
 
 
